@@ -10,12 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906182733) do
+ActiveRecord::Schema.define(version: 20170906214538) do
 
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "mailing_adress"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "instruments", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "instruments_music_pieces", force: :cascade do |t|
+    t.integer "instrument_id"
+    t.integer "music_piece_id"
+    t.index ["instrument_id"], name: "index_instruments_music_pieces_on_instrument_id"
+    t.index ["music_piece_id"], name: "index_instruments_music_pieces_on_music_piece_id"
+  end
+
+  create_table "music_pieces", force: :cascade do |t|
+    t.string "title"
+    t.string "composer"
+    t.string "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -27,6 +48,16 @@ ActiveRecord::Schema.define(version: 20170906182733) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
+  create_table "sheet_musics", force: :cascade do |t|
+    t.string "title"
+    t.integer "instrument_id"
+    t.integer "music_piece_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["instrument_id"], name: "index_sheet_musics_on_instrument_id"
+    t.index ["music_piece_id"], name: "index_sheet_musics_on_music_piece_id"
   end
 
 end
